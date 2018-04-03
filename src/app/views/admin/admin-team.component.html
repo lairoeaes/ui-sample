@@ -1,0 +1,258 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i>
+          <span i18n>隊伍</span>
+        </div>
+        <div class="card-body">
+          <div class="text-right" style="margin-bottom: 1em;">
+            <button type="button" class="btn btn-secondary">
+              <span i18n>產生 Excel</span>
+            </button>
+            <button type="button" class="btn btn-primary" (click)="showCreateCard()">
+              <span i18n>新增</span>
+            </button>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th i18n>代號</th>
+                <th i18n>項目</th>
+                <th i18n>報名單位</th>
+                <th i18n>報名者</th>
+                <th i18n>報名者電話</th>
+                <th i18n>參賽單位</th>
+                <th i18n>選手</th>
+                <th i18n>生日</th>
+                <th i18n>動作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let team of teams">
+                <td>{{team.id}}</td>
+                <td>{{team.competitionItem.itemNumber + '. ' + team.competitionItem.name}}</td>
+                <td>{{team.coach.unit}}</td>
+                <td>{{team.coach.name}}</td>
+                <td>{{team.coach.phone}}</td>
+                <td>{{team.competitionUnit.name}}</td>
+                <td>
+                  <div *ngFor="let member of team.members">
+                    {{member.name}}
+                  </div>
+                </td>
+                <td>
+                  <div *ngFor="let member of team.members">
+                    {{member.birthday | date : 'yyyy/MM/dd'}}
+                  </div>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-primary">
+                    <span i18n>編輯</span>
+                  </button>
+                  <button type="button" class="btn btn-danger">
+                    <span i18n>刪除</span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+  <!--/.row-->
+  <!-- Create -->
+  <div class="row">
+    <div class="col-sm-12 col-lg-12">
+      <div class="card" [hidden]="!isCreateShown">
+        <div class="card-header">
+          <i class="fa fa-plus"></i>
+          <span i18n>新增</span>
+          <div class="card-actions">
+            <button type="button" class="btn" (click)="hideCreateCard()">
+              <span i18n>關閉</span>
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <h5 i18n>說明</h5>
+          <ol>
+            <li>請先選擇教練</li>
+            <li>會自動帶出教練底下的學生與單位，若不存在，可自行新增</li>
+            <li>新增選手與單位後，再新增一隊伍，並選擇項目與參賽者</li>
+          </ol>
+          <div class="row">
+            <!-- Select coach -->
+            <div class="col-sm-12 col-lg-12">
+              <div class="card">
+                <div class="card-header">
+                  1.
+                  <span i18n>選擇教練</span>
+                </div>
+                <div class="card-body">
+                  <select class="custom-select" id="coachSelect">
+                    <option *ngFor="let coach of coachs" [value]="coach">{{coach.name}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- New members -->
+            <div class="col-sm-12 col-lg-6">
+              <div class="card">
+                <div class="card-header">
+                  2.
+                  <span i18n>新增競賽選手</span>
+                </div>
+                <div class="card-body">
+                  <div class="form-group">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th i18n>姓名</th>
+                          <th i18n *ngIf="conf.isIdNumberShown">身分證</th>
+                          <th i18n>生日</th>
+                          <th>
+                            <button type="button" class="btn btn-primary" (click)="addNewMember()">
+                              <span i18n>新增</span>
+                            </button>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let member of members; let i = index" [attr.data-index]="i">
+                          <td>
+                            <input type="text" class="form-control" [(ngModel)]="member.name" i18n-placeholder placeholder="例如：王大明">
+                          </td>
+                          <td *ngIf="conf.isIdNumberShown">
+                            <input type="text" class="form-control" [(ngModel)]="member.idNumber" i18n-placeholder placeholder="例如：N123456789">
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" [ngModel]="member.birthday | date : 'yyyy/MM/dd'" i18n-placeholder placeholder="例如：1989/01/01">
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-danger" (click)="deleteMember(i)">
+                              <span i18n>刪除</span>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- New competition units -->
+            <div class="col-sm-12 col-lg-6">
+              <div class="card">
+                <div class="card-header">
+                  3.
+                  <span i18n>新增競賽單位</span>
+                </div>
+                <div class="card-body">
+                  <div class="form-group">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th i18n>名稱</th>
+                          <th>
+                            <button type="button" class="btn btn-primary" (click)="addNewCompetitionUnit()">
+                              <span i18n>新增</span>
+                            </button>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let competitionUnit of competitionUnits; let i = index" [attr.data-index]="i">
+                          <td>
+                            <input type="text" class="form-control" [(ngModel)]="competitionUnit.name" i18n-placeholder placeholder="例如：大安國小">
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-danger" (click)="deleteCompetitionUnit(i)">
+                              <span i18n>刪除</span>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- New teams -->
+            <div class="col-sm-12 col-lg-12">
+              <div class="card">
+                <div class="card-header">
+                  4.
+                  <span i18n>新增隊伍</span>
+                </div>
+                <div class="card-body">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th i18n>編號</th>
+                        <th i18n>項目</th>
+                        <th i18n>單位</th>
+                        <th i18n>選手</th>
+                        <th>
+                          <button type="button" class="btn btn-primary" (click)="addNewTeam()">
+                            <span i18n>新增</span>
+                          </button>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let newTeam of newTeams; let i = index" [attr.data-index]="i">
+                        <td>
+                          {{i + 1}}
+                        </td>
+                        <td>
+                          <select class="custom-select" [ngModel]="newTeam.competitionItem">
+                            <option *ngFor="let competitionItem of competitionItems" [ngValue]="competitionItem">{{competitionItem.itemNumber + '. ' + competitionItem.name}}</option>
+                          </select>
+                        </td>
+                        <td>
+                          <select class="custom-select" [ngModel]="newTeam.competitionUnit">
+                            <option *ngFor="let competitionUnit of competitionUnits" [ngValue]="competitionUnit">{{competitionUnit.name}}</option>
+                          </select>
+                        </td>
+                        <td>
+                          <div *ngFor="let member of newTeam.members; let j = index" [attr.data-index]="j">
+                            <select class="custom-select" [ngModel]="newTeam.members[j]">
+                              <option *ngFor="let member of members" [ngValue]="member">{{member.name + ' (' + (member.birthday | date : 'yyyy/MM/dd') + ')'}}</option>
+                            </select>
+                          </div>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-danger" (click)="deleteTeam(i)">
+                            <span i18n>刪除</span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer text-right">
+          <button type="button" class="btn btn-secondary" (click)="hideCreateCard()">
+            <span i18n>關閉</span>
+          </button>
+          <button type="submit" class="btn btn-primary" (click)="submit()">
+            <span i18n>送出</span>
+          </button>
+        </div>
+      </div>
+      <!--/.col-->
+    </div>
+    <!--/Create-->
+  </div>
+</div>

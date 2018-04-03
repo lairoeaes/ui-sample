@@ -8,19 +8,19 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 // Modal Component
 import { ModalModule } from 'ngx-bootstrap/modal';
 
-import { DashboardComponent } from './dashboard.component';
-import { DashboardRoutingModule } from './dashboard-routing.module';
+import { AdminTeamComponent } from './admin-team.component';
+import { AdminTeamRoutingModule } from './admin-team-routing.module';
 
 @NgModule({
   imports: [
     FormsModule,
     CommonModule,
-    DashboardRoutingModule,
+    AdminTeamRoutingModule,
     ChartsModule,
     BsDropdownModule,
     ButtonsModule.forRoot(),
     ModalModule.forRoot()
   ],
-  declarations: [ DashboardComponent ]
+  declarations: [ AdminTeamComponent ]
 })
-export class DashboardModule { }
+export class AdminModule { }

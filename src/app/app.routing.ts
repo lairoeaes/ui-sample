@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { HomeComponent } from './views/home/home.component';
+import { CompetitionItemComponent } from './views/home/competition-item.component';
+import { LoginComponent } from './views/home/login.component';
+import { LogoutComponent } from './views/home/logout.component';
 
 // Import Containers
 import {
@@ -10,19 +14,44 @@ import {
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
   {
     path: '',
     component: FullLayoutComponent,
-    data: {
-      title: 'Home'
-    },
     children: [
       {
-        path: 'dashboard',
-        loadChildren: './views/dashboard/dashboard.module#DashboardModule'
+        path: 'home',
+        component: HomeComponent,
+        data: {
+          title: 'Home'
+        }
+      },
+      {
+        path: 'competition-item',
+        component: CompetitionItemComponent,
+        data: {
+          title: 'Competition item'
+        }
+      },
+      {
+        path: 'login',
+        component: LoginComponent,
+        data: {
+          title: 'Login'
+        }
+      },
+      {
+        path: 'logout',
+        component: LogoutComponent,
+        data: {
+          title: 'Logout'
+        }
+      },
+      {
+        path: 'admin-team',
+        loadChildren: './views/admin/admin.module#AdminModule'
       }
     ]
   }

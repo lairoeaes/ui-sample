@@ -1,7 +1,6 @@
 import { Component, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
-
-// Import navigation elements
-import { navigation } from './../../_nav';
+import { AppService } from './../../app.service';
+import 'rxjs/add/operator/takeWhile';
 
 @Component({
   selector: 'app-sidebar-nav',
@@ -11,18 +10,18 @@ import { navigation } from './../../_nav';
         <ng-template ngFor let-navitem [ngForOf]="navigation">
           <li *ngIf="isDivider(navitem)" class="nav-divider"></li>
           <ng-template [ngIf]="isTitle(navitem)">
-            <app-sidebar-nav-title [title]='navitem'></app-sidebar-nav-title>
+            <app-sidebar-nav-title [title]="navitem"></app-sidebar-nav-title>
           </ng-template>
           <ng-template [ngIf]="!isDivider(navitem)&&!isTitle(navitem)">
-            <app-sidebar-nav-item [item]='navitem'></app-sidebar-nav-item>
+            <app-sidebar-nav-item [item]="navitem"></app-sidebar-nav-item>
           </ng-template>
         </ng-template>
       </ul>
     </nav>`
 })
-export class AppSidebarNavComponent {
-
-  public navigation = navigation;
+export class AppSidebarNavComponent implements OnInit {
+  public navigation = [];
+  private alive = true;
 
   public isDivider(item) {
     return item.divider ? true : false
@@ -32,7 +31,22 @@ export class AppSidebarNavComponent {
     return item.title ? true : false
   }
 
-  constructor() { }
+  constructor(private appService: AppService) {
+    this.navigation = this.appService.navigation;
+    // this.appService.name$.takeWhile(() => this.alive).subscribe(
+    //   navigation => {
+    //     console.log('nav is updated:', navigation);
+    //     console.log('this.nav len: %d', this.navigation.length);
+    //     this.navigation.splice(0, this.navigation.length);
+    //     this.navigation.push.apply(this.navigation, navigation);
+    //     console.log('new this.nav:', this.navigation);
+    //     console.log('new this.nav len: %d', this.navigation.length);
+    //   });
+  }
+
+  ngOnInit() {
+    console.log('navigation: %O', this.navigation);
+  }
 }
 
 import { Router } from '@angular/router';
@@ -72,8 +86,7 @@ export class AppSidebarNavItemComponent {
     return this.router.isActive(this.thisUrl(), false)
   }
 
-  constructor( private router: Router )  { }
-
+  constructor(private router: Router) {}
 }
 
 @Component({
@@ -122,7 +135,7 @@ export class AppSidebarNavLinkComponent {
     }
   }
 
-  constructor() { }
+  constructor() {}
 }
 
 @Component({
@@ -170,12 +183,12 @@ export class AppSidebarNavTitleComponent implements OnInit {
 
     this.renderer.addClass(li, 'nav-title');
 
-    if ( this.title.class ) {
+    if (this.title.class) {
       const classes = this.title.class;
       this.renderer.addClass(li, classes);
     }
 
-    if ( this.title.wrapper ) {
+    if (this.title.wrapper) {
       const wrapper = this.renderer.createElement(this.title.wrapper.element);
 
       this.renderer.appendChild(wrapper, name);
