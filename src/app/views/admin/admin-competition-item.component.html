@@ -1,0 +1,173 @@
+<div class="animated fadeIn">
+  <!-- Gender -->
+  <div class="row">
+    <div class="col-sm-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i>
+          <span i18n>性別</span>
+        </div>
+        <div class="card-body">
+          <div class="text-right" style="margin-bottom: 1em;">
+            <button type="button" class="btn btn-primary" (click)="showCreateCard()">
+							<span i18n>新增</span>
+			  		</button>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th i18n>代號</th>
+                <th i18n>姓名</th>
+                <th i18n>動作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let gender of genders">
+                <td>{{gender.id}}</td>
+                <td>{{gender.name}}</td>
+                <td>
+                  <button type="button" class="btn btn-primary" i18n>編輯</button>
+                  <button type="button" class="btn btn-danger" i18n>刪除</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+  <!-- Level -->
+  <div class="row">
+    <div class="col-sm-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i>
+          <span i18n>年級</span>
+        </div>
+        <div class="card-body">
+          <div class="text-right" style="margin-bottom: 1em;">
+            <button type="button" class="btn btn-secondary">
+				  <span i18n>產生 Excel</span>
+				</button>
+            <button type="button" class="btn btn-primary" (click)="showCreateCard()">
+				  <span i18n>新增</span>
+				</button>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th i18n>代號</th>
+                <th i18n>名稱</th>
+                <th i18n>動作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let level of levels">
+                <td>{{level.id}}</td>
+                <td>{{level.name}}</td>
+                <td>
+                  <button type="button" class="btn btn-primary" i18n>編輯</button>
+                  <button type="button" class="btn btn-danger" i18n>刪除</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+  <!-- Type -->
+  <div class="row">
+    <div class="col-sm-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i>
+          <span i18n>比賽類型</span>
+        </div>
+        <div class="card-body">
+          <div class="text-right" style="margin-bottom: 1em;">
+            <button type="button" class="btn btn-secondary">
+						<span i18n>產生 Excel</span>
+					</button>
+            <button type="button" class="btn btn-primary" (click)="showCreateCard()">
+						<span i18n>新增</span>
+					</button>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th i18n>代號</th>
+                <th i18n>名稱</th>
+                <th i18n>動作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let type of types">
+                <td>{{type.id}}</td>
+                <td>{{type.name}}</td>
+                <td>
+                  <button type="button" class="btn btn-primary" i18n>編輯</button>
+                  <button type="button" class="btn btn-danger" i18n>刪除</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+  <!-- Item -->
+  <div class="row">
+    <div class="col-sm-12 col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i>
+          <span i18n>項目</span>
+        </div>
+        <div class="card-body">
+          <div class="text-right" style="margin-bottom: 1em;">
+            <button type="button" class="btn btn-secondary">
+							<span i18n>產生 Excel</span>
+						</button>
+            <button type="button" class="btn btn-primary" (click)="showCreateCard()">
+							<span i18n>新增</span>
+						</button>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th i18n>代號</th>
+                <th i18n>名稱</th>
+                <th i18n>性別</th>
+                <th i18n>學級</th>
+                <th i18n>比賽種類</th>
+                <th i18n>人數</th>
+                <th i18n>費用</th>
+                <th i18n>動作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of items">
+                <td>{{item.itemNumber}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.gender}}</td>
+                <td>{{item.level}}</td>
+                <td>{{item.competitionType}}</td>
+                <td>{{item.memberNumber}}</td>
+                <td>{{item.fee}}</td>
+                <td>
+                  <button type="button" class="btn btn-primary" i18n>編輯</button>
+                  <button type="button" class="btn btn-danger" i18n>刪除</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+</div>

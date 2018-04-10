@@ -16,13 +16,13 @@ import { Team } from '../../models/team.model';
 export class AdminTeamComponent implements OnInit {
   // Create
   public isCreateShown = false;
-  // Coachs
-  public coachs: Coach[] = [
+  // coaches
+  public coaches: Coach[] = [
     new Coach(1, '台灣大學', 'Lucas', '0911123456', 'lucas'),
     new Coach(2, '台灣大學', 'Aaron', '0911123456', 'aaron'),
     new Coach(3, '台灣大學', 'Joe', '0911123456', 'joe')
   ];
-  public selectedCoach: Coach = this.coachs[0];
+  public selectedCoach: Coach = this.coaches[0];
   // Members
   public members: Member[] = [
     new Member(1, 'Eve', '123', new Date('1989/10/11'), this.selectedCoach),
@@ -49,7 +49,7 @@ export class AdminTeamComponent implements OnInit {
   public teams: Team[] = [
     new Team(1,
       this.competitionItems[1],
-      this.coachs[1],
+      this.coaches[1],
       this.competitionUnits[1],
       [
         this.members[1],
@@ -59,7 +59,7 @@ export class AdminTeamComponent implements OnInit {
     ),
     new Team(2,
       this.competitionItems[2],
-      this.coachs[2],
+      this.coaches[2],
       this.competitionUnits[2],
       [
         this.members[3],
@@ -72,7 +72,7 @@ export class AdminTeamComponent implements OnInit {
   public newTeams: Team[] = [
     new Team(-1,
       this.competitionItems[2],
-      this.coachs[2],
+      this.coaches[2],
       this.competitionUnits[2],
       [
         this.members[3],

@@ -50,7 +50,7 @@ export const routes: Routes = [
         }
       },
       {
-        path: 'admin-team',
+        path: 'admin',
         loadChildren: './views/admin/admin.module#AdminModule'
       }
     ]
